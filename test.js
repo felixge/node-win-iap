@@ -33,6 +33,18 @@ test('ok', function() {
     });
 });
 
+test('response object', function() {
+  return v
+    .verify(receipt)
+    .then(function(response) {
+      assert.ok("expiryTimeMillis" in response);
+      assert.equal(response.expiryTimeMillis,1346627329000);
+      assert.ok("startTimeMillis" in response);
+      assert.equal(response.startTimeMillis,1346368132000);
+    });
+});
+
+
 test('badSig', function() {
   return v
     .verify(receipt.replace('SjRIxS', 'FUBAR'))

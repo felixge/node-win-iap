@@ -1,6 +1,6 @@
 {
   "name": "win-iap",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Verifies windows store receipts.",
   "main": "index.js",
   "scripts": {
@@ -22,15 +22,19 @@
     "validate"
   ],
   "author": "Felix Geisendörfer <felix@debuggable.com> (http://debuggable.com/)",
+  "contributors": [
+    "Max Maurer <maxemanuel.maurer@gmail.com> (http://max-maurer.de/)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/felixge/node-verify-windows-store-receipt/issues"
   },
   "homepage": "https://github.com/felixge/node-verify-windows-store-receipt",
   "dependencies": {
-    "xml-crypto": "0.0.22",
-    "xmldom": "^0.1.19",
+    "moment": "^2.8.1",
+    "q": "^1.0.1",
     "request": "^2.36.0",
-    "q": "^1.0.1"
+    "xml-crypto": "0.0.22",
+    "xmldom": "^0.1.19"
   }
 }

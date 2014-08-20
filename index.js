@@ -2,6 +2,7 @@ var Dom = require('xmldom').DOMParser;
 var crypto = require('xml-crypto');
 var request = require('request');
 var q = require('q');
+var moment = require('moment');
 
 module.exports = Verifier;
 function Verifier(options) {
@@ -58,18 +59,18 @@ Verifier.prototype.verify = function(receipt) {
         }
         d.resolve(body);
       });
-      return self._fetches[certId] = d.promise;
+      self._fetches[certId] = d.promise;
+      return self._fetches[certId];
     })
     .then(function checkSignature(cert) {
       q
       .try(function() {
         // cache set could be async
-        return self._certCache.set(certId, cert); 
+        return self._certCache.set(certId, cert);
       })
       .then(function() {
         delete self._fetches[certId];
       });
-
       var canonicalXML = stripWhitespace(doc.firstChild).toString();
       var sigXPath =  "//*//*[local-name(.)='Signature' and namespace-uri(.)='http://www.w3.org/2000/09/xmldsig#']";
       var signature = crypto.xpath(doc, sigXPath)[0];
@@ -77,7 +78,13 @@ Verifier.prototype.verify = function(receipt) {
       sig.keyInfoProvider = new MemoryKeyInfo(cert);
       sig.loadSignature(signature.toString());
       if (sig.checkSignature(canonicalXML)) {
-        return;
+        var purchaseDate = doc.getElementsByTagName('ProductReceipt')[0].getAttribute('PurchaseDate');
+        var expirationDate = doc.getElementsByTagName('ProductReceipt')[0].getAttribute('ExpirationDate');
+        var options = {
+          "startTimeMillis": moment(purchaseDate).valueOf(),
+          "expiryTimeMillis": moment(expirationDate).valueOf()
+        };
+        return options;
       }
       var err = new Error('Bad Signature');
       err.verifyErr = 'badsignature';
