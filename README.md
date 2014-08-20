@@ -20,8 +20,10 @@ var Verifier = require('win-iap');
 var verifier = new Verifier();
 verifier
   .verify(receipt)
-  .then(function() {
+  .then(function(response) {
     console.log('Valid receipt.');
+    console.log('purchased: '+response.startTimeMillis);
+    console.log('expires: '+response.expiryTimeMillis);
   })
   .catch(function(err) {
     console.log('Invalid receipt: ', err);
