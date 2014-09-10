@@ -81,8 +81,8 @@ Verifier.prototype.verify = function(receipt) {
         var purchaseDate = doc.getElementsByTagName('ProductReceipt')[0].getAttribute('PurchaseDate');
         var expirationDate = doc.getElementsByTagName('ProductReceipt')[0].getAttribute('ExpirationDate');
         var options = {
-          "startTimeMillis": moment(purchaseDate).valueOf(),
-          "expiryTimeMillis": moment(expirationDate).valueOf()
+          "startTimeMillis": moment.utc(purchaseDate).valueOf(),
+          "expiryTimeMillis": moment.utc(expirationDate).valueOf()
         };
         return options;
       }

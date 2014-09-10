@@ -24,7 +24,7 @@ test('ok', function() {
       // cert should be cached on second fetch with same Verifier
       return v.verify(receipt).then(function() {
         return Date.now() - start;
-      })
+      });
     })
     .then(function(duration) {
       // 100ms tolerance because the xpath engine seems to be slow, taking up to
