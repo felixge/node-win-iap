@@ -22,6 +22,7 @@ verifier
   .verify(receipt)
   .then(function(response) {
     console.log('Valid receipt.');
+    console.log('id: '+response.id);
     console.log('purchased: '+response.startTimeMillis);
     console.log('expires: '+response.expiryTimeMillis);
   })
