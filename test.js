@@ -37,6 +37,8 @@ test('response object', function() {
   return v
     .verify(receipt)
     .then(function(response) {
+      assert.ok("id" in response);
+      assert.equal(response.id,'6bbf4366-6fb2-8be8-7947-92fd5f683530');
       assert.ok("expiryTimeMillis" in response);
       assert.equal(response.expiryTimeMillis,1346627329000);
       assert.ok("startTimeMillis" in response);

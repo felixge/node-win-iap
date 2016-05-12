@@ -78,9 +78,11 @@ Verifier.prototype.verify = function(receipt) {
       sig.keyInfoProvider = new MemoryKeyInfo(cert);
       sig.loadSignature(signature.toString());
       if (sig.checkSignature(canonicalXML)) {
+        var id = doc.getElementsByTagName('ProductReceipt')[0].getAttribute('Id');
         var purchaseDate = doc.getElementsByTagName('ProductReceipt')[0].getAttribute('PurchaseDate');
         var expirationDate = doc.getElementsByTagName('ProductReceipt')[0].getAttribute('ExpirationDate');
         var options = {
+          "id": id,
           "startTimeMillis": moment.utc(purchaseDate).valueOf(),
           "expiryTimeMillis": moment.utc(expirationDate).valueOf()
         };
